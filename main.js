@@ -95,7 +95,7 @@ async function rotate(request) {
             if(!url.search)
                 return response(403, "Parameter is empty");
             await Storage.delete(`${rotatePara.user}@${url.search.replace("?","")}`);
-            return response(200, "Delete Successful");
+            return response(200, "Delete successful");
 
         default:
             return response(404, "NotFound");
