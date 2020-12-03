@@ -1,6 +1,6 @@
 # KVStorage
-Conchbrain club offical key&amp;value storage
+#### Conchbrain club offical KV Storage
 
-A key&value storage base on serverless
+A KV Storage base on Serverless
 
-Powered by Cloudflare workers
+Powered by Cloudflare Workers
