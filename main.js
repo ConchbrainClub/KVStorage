@@ -7,6 +7,11 @@ async function handleRequest(request) {
     return rotate(request);
 }
 
+let welcomePage = `
+    <p>Welcome to ConchBrain KVStorage</p>
+    <p>Please read the <a href="https://conchbrain.club/#kvstorage" target="_blank">documentation</a></p>
+`;
+
 //Standard response
 function response(stateCode, content, contentType) {
     if(contentType == null)
@@ -31,13 +36,11 @@ async function rotate(request) {
     let rotatePara = parsePara(url.pathname);
     
     if(!rotatePara.user)
-        return Response.redirect("https://conchbrain.club/#kvstorage", 302)
+        return response(200, welcomePage, "text/html");
     
     switch(rotatePara.path) {
         case "/":
-            let list = (await Storage.list()).keys.filter((item)=>{
-                return item.name.includes(rotatePara.user);
-            });
+            let list = (await Storage.list({"prefix": `${rotatePara.user}@`})).keys;
             let results = new Array();
 
             for(let i=0;i<list.length;i++) {
@@ -87,6 +90,12 @@ async function rotate(request) {
 
             await Storage.put(rotatePara.user + "@" + data.key, JSON.stringify(data.value));
             return response(200, "Put successful");
+
+        case "/delete":
+            if(!url.search)
+                return response(403, "Parameter is empty");
+            await Storage.delete(`${rotatePara.user}@${url.search.replace("?","")}`);
+            return response(200, "Delete Successful");
 
         default:
             return response(404, "NotFound");
