@@ -35,16 +35,16 @@ async function rotate(request) {
 
     let rotatePara = parsePara(url.pathname);
     
-    if(!rotatePara.user)
+    if(!rotatePara.bucket)
         return response(200, welcomePage, "text/html");
     
     switch(rotatePara.path) {
         case "/":
-            let list = (await Storage.list({"prefix": `${rotatePara.user}@`})).keys;
+            let list = (await Storage.list({"prefix": `${rotatePara.bucket}@`})).keys;
             let results = new Array();
 
             for(let i=0;i<list.length;i++) {
-                let key = list[i].name.replace(rotatePara.user + "@", "");
+                let key = list[i].name.replace(rotatePara.bucket + "@", "");
                 let value = await Storage.get(list[i].name);
 
                 results.push({
@@ -59,7 +59,7 @@ async function rotate(request) {
             if(!url.search)
                 return response(403, "Parameter is empty");
 
-            let para = rotatePara.user + "@" + url.search.replace("?","");
+            let para = rotatePara.bucket + "@" + url.search.replace("?","");
             let result = await Storage.get(para);
             return response(200, result);
 
@@ -88,13 +88,13 @@ async function rotate(request) {
             if(!verifyResult.flag)
                 return response(403, verifyResult.msg);
 
-            await Storage.put(rotatePara.user + "@" + data.key, JSON.stringify(data.value));
+            await Storage.put(rotatePara.bucket + "@" + data.key, JSON.stringify(data.value));
             return response(200, "Put successful");
 
         case "/delete":
             if(!url.search)
                 return response(403, "Parameter is empty");
-            await Storage.delete(`${rotatePara.user}@${url.search.replace("?","")}`);
+            await Storage.delete(`${rotatePara.bucket}@${url.search.replace("?","")}`);
             return response(200, "Delete successful");
 
         default:
@@ -108,14 +108,14 @@ function parsePara(fullPathName) {
     try{
         let result = new RegExp("/[a-zA-Z0-9]+").exec(fullPathName)[0];
 
-        let user = result.replace("/","");
+        let bucket = result.replace("/","");
         let path = fullPathName.replace(result,"");
 
         if(!path)
             path = "/";
 
         return {
-            "user": user,
+            "bucket": bucket,
             "path": path
         };
     }
