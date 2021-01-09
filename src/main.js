@@ -73,7 +73,7 @@ http.createServer((req,res)=>{
             if(req.method != "PUT")
                 return responseError(res,"method is not support");
 
-            if(req.headers["content-type"] != "application/json")
+            if(!req.headers["content-type"].includes("application/json"))
                 return responseError(res,"content-type is not support");
 
             let data = "";
