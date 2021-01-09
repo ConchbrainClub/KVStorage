@@ -1,0 +1,19 @@
+{
+  "name": "kvstorage",
+  "version": "1.0.0",
+  "description": "WebApi Based Key Value Pair Storage",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node ./src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConchBrainClub/KVStorage.git"
+  },
+  "author": "lllxy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ConchBrainClub/KVStorage/issues"
+  },
+  "homepage": "https://www.conchbrain.club/#kvstorage"
+}
