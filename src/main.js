@@ -18,6 +18,7 @@ http.createServer((req,res)=>{
     
     res.setHeader("Access-Control-Allow-Origin","*");
     res.setHeader("Access-Control-Allow-Headers","*");
+    res.setHeader("Access-Control-Allow-Methods","*");
     res.setHeader("content-type","text/plain; charset=UTF-8")
 
     let url = new URL(req.url,"http://localhost:8080");
