@@ -84,7 +84,14 @@ http.createServer((req,res)=>{
             })
 
             req.on("end",()=>{
-                data = JSON.parse(data);
+
+                try {
+                    data = JSON.parse(data);
+                } 
+                catch (error) {
+                    return res.end("parse json error");
+                }
+
                 let verifyResult = verifyData(data);
                 if(!verifyResult.flag)
                     return responseError(res,verifyResult.msg);
