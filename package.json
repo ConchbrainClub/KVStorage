@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ConchBrainClub/KVStorage/issues"
   },
-  "homepage": "https://www.conchbrain.club/#kvstorage"
+  "homepage": "https://www.conchbrain.club/#kvstorage",
+  "dependencies": {
+    "redis": "^3.0.2"
+  }
 }
