@@ -23,8 +23,10 @@ http.createServer((req,res)=>{
     let url = new URL(req.url,"http://localhost:8080");
     let rotatePara = parsePara(url.pathname);
 
-    if(!rotatePara.bucket)
+    if(!rotatePara.bucket){
+        res.setHeader("content-type","text/html; charset=UTF-8")
         return res.end(welcomePage);
+    }
     
     switch(rotatePara.operation) {
         case "/":
@@ -37,7 +39,7 @@ http.createServer((req,res)=>{
             if(isNaN(Number(page)))
                 return res.end("page is not a num");
 
-            client.scan(page,"match",bucket,(err,replay) => {
+            client.scan(page,"match",bucket,"count","100",(err,replay) => {
                 if(err)
                     return res.end("get bucket error");
                 let result = {
