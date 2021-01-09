@@ -67,7 +67,7 @@ async function rotate(request) {
 
         case "/set":
 
-            if(request.method != "POST")
+            if(request.method != "PUT")
                 return response(403, "Method is not support");
 
             try{
