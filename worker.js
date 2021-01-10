@@ -26,6 +26,7 @@ function response(stateCode, content, contentType) {
             "content-type": contentType,
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*",
             "Access-Control-Max-Age": "86400"
         }
     });
@@ -66,6 +67,9 @@ async function rotate(request) {
             return response(200, result);
 
         case "/set":
+
+            if(request.method == "OPTIONS")
+                return response(200, "OK");
 
             if(request.method != "PUT")
                 return response(403, "Method is not support");
