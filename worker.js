@@ -62,7 +62,7 @@ async function rotate(request) {
             if(!url.search)
                 return response(403, "Parameter is empty");
 
-            let para = rotatePara.bucket + "@" + url.search.replace("?","");
+            let para = rotatePara.bucket + "@" + decodeURI(url.search.replace("?",""));
             let result = await Storage.get(para);
             return response(200, result);
 
@@ -100,7 +100,7 @@ async function rotate(request) {
         case "/delete":
             if(!url.search)
                 return response(403, "Parameter is empty");
-            await Storage.delete(`${rotatePara.bucket}@${url.search.replace("?","")}`);
+            await Storage.delete(`${rotatePara.bucket}@${decodeURI(url.search.replace("?",""))}`);
             return response(200, "Delete successful");
 
         default:
