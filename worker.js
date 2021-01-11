@@ -48,7 +48,7 @@ async function rotate(request) {
 
             for(let i=0;i<list.length;i++) {
                 let key = list[i].name.replace(rotatePara.bucket + "@", "");
-                let value = await Storage.get(list[i].name);
+                let value = JSON.parse(await Storage.get(list[i].name));
 
                 results.push({
                     "key": key,
