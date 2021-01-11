@@ -135,9 +135,7 @@ function parsePara(fullPathName) {
 
 //Verify FormData is not null or empty
 function verifyData(data) {
-    var result = {
-        
-    }
+    
     if(!data.key || !data.value)
         return {
             "flag": false,
