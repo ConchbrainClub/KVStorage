@@ -20,7 +20,7 @@
             <pre class="embed" data-gutter="inside">
 const https = require("https");
 
-https.request("https://storage.conchbrain.workers.dev/demobucket/set",{
+https.request("https://storage.conchbrain.workers.dev/demo/set",{
     headers: {
         "content-type": "application/json"
     },
@@ -50,7 +50,7 @@ https.request("https://storage.conchbrain.workers.dev/demobucket/set",{
             <pre class="embed" data-gutter="inside">
 const https = require("https");
 
-https.get("https://storage.conchbrain.workers.dev/demobucket/get?Hi",(res) => {
+https.get("https://storage.conchbrain.workers.dev/demo/get?Hi",(res) => {
 
     let data = "";
 
@@ -69,7 +69,7 @@ https.get("https://storage.conchbrain.workers.dev/demobucket/get?Hi",(res) => {
             <pre class="embed" data-gutter="inside">
 const https = require("https");
 
-https.get("https://storage.conchbrain.workers.dev/demobucket/",(res) => {
+https.get("https://storage.conchbrain.workers.dev/demo/",(res) => {
 
     let data = "";
 
