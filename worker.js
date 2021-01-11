@@ -64,7 +64,10 @@ async function rotate(request) {
 
             let para = rotatePara.bucket + "@" + decodeURI(url.search.replace("?",""));
             let result = await Storage.get(para);
-            return response(200, result);
+            if(result){
+                return response(200, result);
+            }
+            return response(404, "not found");
 
         case "/set":
 
