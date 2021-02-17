@@ -114,7 +114,6 @@ async function rotate(request) {
         default:
             return response(404, "NotFound");
     }
-
 }
 
 function parsePara(fullPathName) {
@@ -138,7 +137,6 @@ function parsePara(fullPathName) {
             "path": fullPathName
         };
     }
-    
 }
 
 //Verify FormData is not null or empty
