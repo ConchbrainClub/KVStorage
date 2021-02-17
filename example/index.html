@@ -85,6 +85,28 @@ https.get("https://storage.conchbrain.workers.dev/demo/",(res) => {
 });
             </pre>
         </div>
+        
+        <div class="row">
+            <pre class="embed" data-gutter="inside">
+const https = require("https");
+
+https.request("https://storage.conchbrain.workers.dev/demo/delete?Hi",{
+    method: "DELETE"
+},(res) => {
+    let data = "";
+
+    res.on("data", (chunk) => {
+        data += chunk;
+    });
+
+    res.on("end",() => {
+        console.log(data);
+    });
+    
+}).end();
+            </pre>
+        </div>
+        
     </div>
 
     <script>
