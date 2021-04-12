@@ -60,13 +60,6 @@ function response(stateCode, content, contentType) {
     });
 }
 
-//Response UI
-function responseUI(stateCode, content, contentType) {
-    contentType = "text/html;charset=UTF-8";
-    content = ui.replace("@JSONCONTENT",content);
-    return response(stateCode, content, contentType);
-}
-
 //Rotate
 async function rotate(request) {
     let url = new URL(request.url);
@@ -75,8 +68,6 @@ async function rotate(request) {
     
     if(!rotatePara.bucket)
         return response(200, welcomePage, "text/html");
-
-    let ua = request.headers.get("user-agent");
     
     switch(rotatePara.path) {
         case "/":
@@ -93,9 +84,6 @@ async function rotate(request) {
                 });
             }
 
-            if(ua)
-                return responseUI(200, JSON.stringify(results));
-
             return response(200, JSON.stringify(results));
 
         case "/get":
@@ -105,12 +93,8 @@ async function rotate(request) {
             let para = rotatePara.bucket + "@" + decodeURI(url.search.replace("?",""));
             let result = await Storage.get(para);
 
-            if(result){
-                if(ua)
-                    return responseUI(200, JSON.stringify(result));
-
+            if(result)
                 return response(200,result);
-            }
 
             return response(404, "not found");
 
