@@ -14,6 +14,33 @@ let welcomePage = `
     </div>
 `;
 
+let ui = `
+    <!DOCTYPE HTML>
+    <html lang="zh-cn">
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsoneditor@9.3.1/dist/jsoneditor.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/jsoneditor@9.3.1/dist/jsoneditor.min.js"></script>
+    </head>
+
+    <body style="margin: 0;">
+
+        <div id="jsoneditor" style="width: 100%; height: 100vh;"></div>
+
+        <script>
+            const container = document.getElementById("jsoneditor");
+            const options = {};
+            const editor = new JSONEditor(container, options);
+
+            const initialJson = @JSONCONTENT;
+            editor.set(initialJson);
+
+            const updatedJson = editor.get();
+        </script>
+    </body>
+    </html>
+`;
+
 //Standard response
 function response(stateCode, content, contentType) {
     if(contentType == null)
@@ -21,6 +48,7 @@ function response(stateCode, content, contentType) {
 
     return new Response(content, {
         status: stateCode,
+
         //CORS header proxy
         headers: {
             "content-type": contentType,
@@ -64,9 +92,10 @@ async function rotate(request) {
 
             let para = rotatePara.bucket + "@" + decodeURI(url.search.replace("?",""));
             let result = await Storage.get(para);
-            if(result){
+
+            if(result)
                 return response(200,result);
-            }
+
             return response(404, "not found");
 
         case "/set":
