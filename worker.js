@@ -14,33 +14,6 @@ let welcomePage = `
     </div>
 `;
 
-let ui = `
-    <!DOCTYPE HTML>
-    <html lang="zh-cn">
-    <head>
-        <meta charset="utf-8"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsoneditor@9.3.1/dist/jsoneditor.min.css" />
-        <script src="https://cdn.jsdelivr.net/npm/jsoneditor@9.3.1/dist/jsoneditor.min.js"></script>
-    </head>
-
-    <body style="margin: 0;">
-
-        <div id="jsoneditor" style="width: 100%; height: 100vh;"></div>
-
-        <script>
-            const container = document.getElementById("jsoneditor");
-            const options = {};
-            const editor = new JSONEditor(container, options);
-
-            const initialJson = @JSONCONTENT;
-            editor.set(initialJson);
-
-            const updatedJson = editor.get();
-        </script>
-    </body>
-    </html>
-`;
-
 //Standard response
 function response(stateCode, content, contentType) {
     if(contentType == null)
@@ -60,21 +33,11 @@ function response(stateCode, content, contentType) {
     });
 }
 
-//Response UI
-function responseUI(stateCode, content, contentType) {
-    contentType = "text/html;charset=UTF-8";
-    content = ui.replace("@JSONCONTENT",content);
-    return response(stateCode, content, contentType);
-}
-
 //Rotate
 async function rotate(request) {
     let url = new URL(request.url);
 
-    let showUI = url.pathname.startsWith("/ui");
-    let path = url.pathname.replace("/ui","");
-
-    let rotatePara = parsePara(path);
+    let rotatePara = parsePara(url.pathname);
     
     if(!rotatePara.bucket)
         return response(200, welcomePage, "text/html");
@@ -94,9 +57,6 @@ async function rotate(request) {
                 });
             }
 
-            if(showUI)
-                return responseUI(200, JSON.stringify(results));
-
             return response(200, JSON.stringify(results));
 
         case "/get":
@@ -106,12 +66,8 @@ async function rotate(request) {
             let para = rotatePara.bucket + "@" + decodeURI(url.search.replace("?",""));
             let result = await Storage.get(para);
 
-            if(result) {
-                if(showUI)
-                    return responseUI(200, JSON.stringify(result));
-
+            if(result)
                 return response(200,result);
-            }
 
             return response(404, "not found");
 
