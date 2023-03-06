@@ -6,7 +6,7 @@ WebApi Based Key Value Pair Storage
 
 ## Set Data
 
-Api: https://storage.conchbrain.workers.dev/demo/set
+Api: https://www.conchbrain.club/storage/demo/set
 
 Method: PUT
 
@@ -19,7 +19,7 @@ Para:
 #### Example
 
 ```shell
-curl -X PUT 'https://storage.conchbrain.workers.dev/demo/set' \
+curl -X PUT 'https://www.conchbrain.club/storage/demo/set' \
     -H 'Content-Type: application/json;' \
     -d '{ "key": "Hi", "value": "ConchBrain KVStorage" }'
 ```
@@ -28,7 +28,7 @@ curl -X PUT 'https://storage.conchbrain.workers.dev/demo/set' \
 
 ## Get Data
 
-Api: https://storage.conchbrain.workers.dev/demo/get
+Api: https://www.conchbrain.club/storage/demo/get
 
 Method: GET
 
@@ -39,14 +39,14 @@ Para:
 #### Example
 
 ```shell
-curl https://storage.conchbrain.workers.dev/demo/get?Hi
+curl https://www.conchbrain.club/storage/demo/get?Hi
 ```
 
 > Response: "Welcome"
 
 ## Get All Data
 
-Api: https://storage.conchbrain.workers.dev/demo
+Api: https://www.conchbrain.club/storage/demo
 
 Method: GET
 
@@ -56,14 +56,14 @@ Para:
 #### Example
 
 ```shell
-curl https://storage.conchbrain.workers.dev/demo
+curl https://www.conchbrain.club/storage/demo
 ```
 
 > Response: JsonStr
 
 ## Delete Data
 
-Api: https://storage.conchbrain.workers.dev/demo/delete
+Api: https://www.conchbrain.club/storage/demo/delete
 
 Method: DELETE
 
@@ -74,5 +74,5 @@ Para:
 #### Example
 
 ```shell
-curl -X DELETE https://storage.conchbrain.workers.dev/demo/delete?hello
+curl -X DELETE https://www.conchbrain.club/storage/demo/delete?hello
 ```
