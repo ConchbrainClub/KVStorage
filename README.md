@@ -6,7 +6,7 @@ WebApi Based Key Value Pair Storage
 
 ## Set Data
 
-Api: https://www.conchbrain.club/storage/demo/set
+Api: https://storage.conchbrain.club/demo/set
 
 Method: PUT
 
@@ -19,7 +19,7 @@ Para:
 #### Example
 
 ```shell
-curl -X PUT 'https://www.conchbrain.club/storage/demo/set' \
+curl -X PUT 'https://storage.conchbrain.club/demo/set' \
     -H 'Content-Type: application/json;' \
     -d '{ "key": "Hi", "value": "ConchBrain KVStorage" }'
 ```
@@ -28,7 +28,7 @@ curl -X PUT 'https://www.conchbrain.club/storage/demo/set' \
 
 ## Get Data
 
-Api: https://www.conchbrain.club/storage/demo/get
+Api: https://storage.conchbrain.club/demo/get
 
 Method: GET
 
@@ -39,14 +39,14 @@ Para:
 #### Example
 
 ```shell
-curl https://www.conchbrain.club/storage/demo/get?Hi
+curl https://storage.conchbrain.club/demo/get?Hi
 ```
 
 > Response: "Welcome"
 
 ## Get All Data
 
-Api: https://www.conchbrain.club/storage/demo
+Api: https://storage.conchbrain.club/demo
 
 Method: GET
 
@@ -56,14 +56,14 @@ Para:
 #### Example
 
 ```shell
-curl https://www.conchbrain.club/storage/demo
+curl https://storage.conchbrain.club/demo
 ```
 
 > Response: JsonStr
 
 ## Delete Data
 
-Api: https://www.conchbrain.club/storage/demo/delete
+Api: https://storage.conchbrain.club/demo/delete
 
 Method: DELETE
 
@@ -74,5 +74,5 @@ Para:
 #### Example
 
 ```shell
-curl -X DELETE https://www.conchbrain.club/storage/demo/delete?hello
+curl -X DELETE https://storage.conchbrain.club/demo/delete?hello
 ```

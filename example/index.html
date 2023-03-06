@@ -20,7 +20,7 @@
             <pre class="embed" data-gutter="inside">
 const https = require("https");
 
-https.request("https://www.conchbrain.club/storage/demo/set",{
+https.request("https://storage.conchbrain.club/demo/set",{
     headers: {
         "content-type": "application/json"
     },
@@ -50,7 +50,7 @@ https.request("https://www.conchbrain.club/storage/demo/set",{
             <pre class="embed" data-gutter="inside">
 const https = require("https");
 
-https.get("https://www.conchbrain.club/storage/demo/get?Hi",(res) => {
+https.get("https://storage.conchbrain.club/demo/get?Hi",(res) => {
 
     let data = "";
 
@@ -69,7 +69,7 @@ https.get("https://www.conchbrain.club/storage/demo/get?Hi",(res) => {
             <pre class="embed" data-gutter="inside">
 const https = require("https");
 
-https.get("https://www.conchbrain.club/storage/demo/",(res) => {
+https.get("https://storage.conchbrain.club/demo/",(res) => {
 
     let data = "";
 
@@ -90,7 +90,7 @@ https.get("https://www.conchbrain.club/storage/demo/",(res) => {
             <pre class="embed" data-gutter="inside">
 const https = require("https");
 
-https.request("https://www.conchbrain.club/storage/demo/delete?Hi",{
+https.request("https://storage.conchbrain.club/demo/delete?Hi",{
     method: "DELETE"
 },(res) => {
     let data = "";
