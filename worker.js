@@ -4,7 +4,7 @@ addEventListener('fetch', event => {
 
 //Handle http qequest
 async function handleRequest(request) {
-    return rotate(request);
+    return route(request);
 }
 
 let welcomePage = `
@@ -33,22 +33,25 @@ function response(stateCode, content, contentType) {
     });
 }
 
-//Rotate
-async function rotate(request) {
+//route
+async function route(request) {
     let url = new URL(request.url);
 
-    let rotatePara = parsePara(url.pathname);
+    if(url.pathname.startsWith('/storage'))
+        url.pathname = url.pathname.replace('/storage', '');
+
+    let routePara = parsePara(url.pathname);
     
-    if(!rotatePara.bucket)
+    if(!routePara.bucket)
         return response(200, welcomePage, "text/html");
     
-    switch(rotatePara.path) {
+    switch(routePara.path) {
         case "/":
-            let list = (await Storage.list({"prefix": `${rotatePara.bucket}@`})).keys;
+            let list = (await Storage.list({"prefix": `${routePara.bucket}@`})).keys;
             let results = new Array();
 
             for(let i=0;i<list.length;i++) {
-                let key = list[i].name.replace(rotatePara.bucket + "@", "");
+                let key = list[i].name.replace(routePara.bucket + "@", "");
                 let value = JSON.parse(await Storage.get(list[i].name));
 
                 results.push({
@@ -63,7 +66,7 @@ async function rotate(request) {
             if(!url.search)
                 return response(403, "Parameter is empty");
 
-            let para = rotatePara.bucket + "@" + decodeURI(url.search.replace("?",""));
+            let para = routePara.bucket + "@" + decodeURI(url.search.replace("?",""));
             let result = await Storage.get(para);
 
             if(result)
@@ -99,7 +102,7 @@ async function rotate(request) {
             if(!verifyResult.flag)
                 return response(403, verifyResult.msg);
 
-            await Storage.put(rotatePara.bucket + "@" + data.key, JSON.stringify(data.value));
+            await Storage.put(routePara.bucket + "@" + data.key, JSON.stringify(data.value));
             return response(200, "Put successful");
 
         case "/delete":
@@ -110,7 +113,7 @@ async function rotate(request) {
             if(!url.search)
                 return response(403, "Parameter is empty");
             
-            await Storage.delete(`${rotatePara.bucket}@${decodeURI(url.search.replace("?",""))}`);
+            await Storage.delete(`${routePara.bucket}@${decodeURI(url.search.replace("?",""))}`);
             return response(200, "Delete successful");
 
         default:
