@@ -59,7 +59,7 @@ https.get("https://storage.conchbrain.club/demo/get?Hi",(res) => {
     });
 
     res.on("end",() => {
-        console.log("Hello " + JSON.parse(data));
+        console.log(data);
     })
 });
             </pre>
@@ -78,9 +78,7 @@ https.get("https://storage.conchbrain.club/demo/",(res) => {
     });
 
     res.on("end",() => {
-        JSON.parse(data).forEach((element) => {
-            console.log(element.value);
-        });
+        console.log(data);
     })
 });
             </pre>

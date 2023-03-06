@@ -37,9 +37,6 @@ function response(stateCode, content, contentType) {
 async function route(request) {
     let url = new URL(request.url);
 
-    if(url.pathname.startsWith('/storage'))
-        url.pathname = url.pathname.replace('/storage', '');
-
     let routePara = parsePara(url.pathname);
     
     if(!routePara.bucket)
