@@ -16,7 +16,7 @@ let welcomePage = `
 
 //Standard response
 function response(stateCode, content, contentType) {
-    if(contentType == null)
+    if (contentType == null)
         contentType = "text/plain;charset=UTF-8";
 
     return new Response(content, {
@@ -38,16 +38,16 @@ async function route(request) {
     let url = new URL(request.url);
 
     let routePara = parsePara(url.pathname);
-    
-    if(!routePara.bucket)
+
+    if (!routePara.bucket)
         return response(200, welcomePage, "text/html");
-    
-    switch(routePara.path) {
+
+    switch (routePara.path) {
         case "/":
-            let list = (await Storage.list({"prefix": `${routePara.bucket}@`})).keys;
+            let list = (await Storage.list({ "prefix": `${routePara.bucket}@` })).keys;
             let results = new Array();
 
-            for(let i=0;i<list.length;i++) {
+            for (let i = 0; i < list.length; i++) {
                 let key = list[i].name.replace(routePara.bucket + "@", "");
                 let value = JSON.parse(await Storage.get(list[i].name));
 
@@ -60,43 +60,43 @@ async function route(request) {
             return response(200, JSON.stringify(results));
 
         case "/get":
-            if(!url.search)
+            if (!url.search)
                 return response(403, "Parameter is empty");
 
-            let para = routePara.bucket + "@" + decodeURI(url.search.replace("?",""));
+            let para = routePara.bucket + "@" + decodeURI(url.search.replace("?", ""));
             let result = await Storage.get(para);
 
-            if(result)
-                return response(200,result);
+            if (result)
+                return response(200, result);
 
             return response(404, "not found");
 
         case "/set":
 
-            if(request.method == "OPTIONS")
+            if (request.method == "OPTIONS")
                 return response(200, "OK");
 
-            if(request.method != "PUT")
+            if (request.method != "PUT")
                 return response(403, "Method is not support");
 
-            try{
-                if(!request.headers.get("Content-Type").includes("application/json"))
+            try {
+                if (!request.headers.get("Content-Type").includes("application/json"))
                     return response(403, "Content-Type is not support");
             }
-            catch{
+            catch {
                 return response(403, "Need Content-Type");
             }
-            
+
             let data = null;
-            try{
+            try {
                 data = await request.json();
             }
-            catch{
+            catch {
                 return response(403, "Parse json error")
             }
 
             let verifyResult = verifyData(data);
-            if(!verifyResult.flag)
+            if (!verifyResult.flag)
                 return response(403, verifyResult.msg);
 
             await Storage.put(routePara.bucket + "@" + data.key, JSON.stringify(data.value));
@@ -104,13 +104,13 @@ async function route(request) {
 
         case "/delete":
 
-            if(request.method != "DELETE")
+            if (request.method != "DELETE")
                 return response(403, "Method is not support");
 
-            if(!url.search)
+            if (!url.search)
                 return response(403, "Parameter is empty");
-            
-            await Storage.delete(`${routePara.bucket}@${decodeURI(url.search.replace("?",""))}`);
+
+            await Storage.delete(`${routePara.bucket}@${decodeURI(url.search.replace("?", ""))}`);
             return response(200, "Delete successful");
 
         default:
@@ -120,13 +120,13 @@ async function route(request) {
 
 function parsePara(fullPathName) {
 
-    try{
+    try {
         let result = new RegExp("/[a-zA-Z0-9]+").exec(fullPathName)[0];
 
-        let bucket = result.replace("/","");
-        let path = fullPathName.replace(result,"");
+        let bucket = result.replace("/", "");
+        let path = fullPathName.replace(result, "");
 
-        if(!path)
+        if (!path)
             path = "/";
 
         return {
@@ -134,7 +134,7 @@ function parsePara(fullPathName) {
             "path": path
         };
     }
-    catch{
+    catch {
         return {
             "path": fullPathName
         };
@@ -143,18 +143,18 @@ function parsePara(fullPathName) {
 
 //Verify FormData is not null or empty
 function verifyData(data) {
-    
-    if(!data.key || !data.value)
+
+    if (!data.key || !data.value)
         return {
             "flag": false,
             "msg": "Data is not perfect"
         };
-    if(typeof(data.key)!="string")
+    if (typeof (data.key) != "string")
         return {
             "flag": false,
             "msg": "Key must be a string"
         };
-        
+
     return {
         "flag": true
     };
